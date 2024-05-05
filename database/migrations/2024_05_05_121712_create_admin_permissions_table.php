@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('admin_permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('details')->nullable();
+            $table->unsignedInteger('admin_id');
+            $table->unsignedInteger('permission_id');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('admin_permissions');
     }
 };
