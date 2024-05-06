@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->controller(AdminAuthController::class)->group(function () {
 
-  Route::middleware('guest:admin')->group(function () {
+  Route::middleware('guest:web,admin')->group(function () {
+
+      Route::post('login', 'login')
+      ->name('login');
 
       Route::get('register', 'registerForm' )
                   ->name('register');
@@ -22,10 +25,9 @@ Route::prefix('admin')->name('admin.')->controller(AdminAuthController::class)->
       Route::post('register', 'register');
 
       Route::get('login', 'loginForm')
-                  ->name('login');
+                  ->name('loginForm');
 
-      Route::post('login', 'login')
-                  ->name('login');
+
     });
 
 });

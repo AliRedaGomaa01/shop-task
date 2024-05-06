@@ -15,10 +15,10 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::group(['prefix' => LaravelLocalization::setLocale() , 'middleware' =>  [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ] ], function()
 {
 
+    require __DIR__.'/adminAuth.php';
+    
     require __DIR__.'/auth.php';
     
-    require __DIR__.'/adminAuth.php';
-
 	/** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
     Route::get('/', function () {
         return Inertia::render('Welcome', [
