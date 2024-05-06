@@ -20,7 +20,7 @@ class AdminAuthController extends Controller
      */
     public function loginForm(): Response
     {
-        return Inertia::render('Admin/Login');
+        return Inertia::render('AdminAuth/Login');
     }
     public function login(Request $request)
     {
@@ -30,11 +30,9 @@ class AdminAuthController extends Controller
         ]);
 
         if (Auth::guard('admin')->attempt([
-
-            'email' => $request->email,
-            'password' => $request->password
-
-            ], $request->hasRememberMe())) {
+                'email' => $request->email,
+                'password' => $request->password
+            ])) {
             
             $request->session()->regenerate();
 
@@ -49,7 +47,7 @@ class AdminAuthController extends Controller
      */
     public function registerForm(): Response
     {
-        return Inertia::render('admin/Register');
+        return Inertia::render('AdminAuth/Register');
     }
 
     /**
@@ -78,15 +76,4 @@ class AdminAuthController extends Controller
         return redirect(route('dashboard', absolute: false));
     }
 
-
-    public function logout(Request $request): RedirectResponse
-    {
-        Auth::guard('admin')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/');
-    }
 }

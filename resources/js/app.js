@@ -5,6 +5,9 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import Layout from './Layouts/AuthenticatedLayout.vue';
+import { Link, Head } from '@inertiajs/vue3';
+import ImageComponent from './Components/Image.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -15,6 +18,10 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .component('Link', Link)
+            .component('Head', Head)
+            .component('Layout', Layout)
+            .component('ImageComponent', ImageComponent)
             .mount(el);
     },
     progress: {
