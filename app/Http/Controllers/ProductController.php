@@ -29,7 +29,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index( Request $request)
+    public function index()
     {
         $products = Product::query()
             ->with('category')->get();

@@ -5,9 +5,11 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
+let trans = usePage().props.trans;
 </script>
 
 <template>
@@ -32,10 +34,16 @@ const showingNavigationDropdown = ref(false);
                                 <!-- Navigation Links -->
                                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                     <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                        Dashboard
+                                        {{ trans['Dashboard']}}
                                     </NavLink>
                                     <NavLink :href="route('products.index')" :active="route().current('products.index')">
-                                        Products
+                                        {{ trans['Products']}}
+                                    </NavLink>
+                                    <NavLink :href="route('lang-test')" :active="route().current('lang-test')">
+                                        {{ trans['Language Test']}}
+                                    </NavLink>
+                                    <NavLink :href="route('otp.test')" :active="route().current('otp.test')">
+                                        {{ trans['OTP Test']}}
                                     </NavLink>
                                     </div>
                             </div>
@@ -118,7 +126,16 @@ const showingNavigationDropdown = ref(false);
                     >
                         <div class="pt-2 pb-3 space-y-1">
                             <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                Dashboard
+                                {{ trans['Dashboard']}}
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('products.index')" :active="route().current('products.index')">
+                                {{ trans['Products']}}
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('lang-test')" :active="route().current('lang-test')">
+                                {{ trans['Language Test']}}
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('otp.test')" :active="route().current('otp.test')">
+                                {{ trans['OTP Test']}}
                             </ResponsiveNavLink>
                         </div>
 

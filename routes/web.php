@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\OTPController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
@@ -26,15 +28,28 @@ Route::group(['prefix' => LaravelLocalization::setLocale() , 'middleware' =>  [ 
             'phpVersion' => PHP_VERSION,
         ]);
     });
-    
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->middleware(['auth:web,admin'])->name('dashboard');
-    
+
     Route::middleware('auth:web,admin')->group(function () {
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/lang-test', function () {
+            return Inertia::render('LangTest');
+        })->name('lang-test');
+        
+        Route::get('/dashboard', function () {
+            return Inertia::render('Dashboard');
+        })->name('dashboard');
+    });
+
+    
+    Route::middleware('auth:web,admin')->controller(ProfileController::class)->group(function () {
+        Route::get('/profile', 'edit')->name('profile.edit');
+        Route::patch('/profile', 'update')->name('profile.update');
+        Route::delete('/profile', 'destroy')->name('profile.destroy');
+    });
+
+    Route::middleware('auth:web,admin')->controller(OTPController::class)->group(function () {
+        Route::get('/otp-test', 'test')->name('otp.test');
+        Route::get('/otp-send', 'send')->name('otp.send');
+        Route::post('/otp-check', 'check')->name('otp.check');
     });
 
     Route::prefix('products')->name('products.')->controller(ProductController::class)->group(function () {
@@ -61,6 +76,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale() , 'middleware' =>  [ 
         Route::group(['middleware' => 'auth:admin'], function () {
             Route::post('/', 'store')->name('store');
             Route::get('/create', 'create')->name('create');
+        });
+
+    });
+
+    Route::prefix('payments')->name('payments.')->controller(PaymentController::class)->group(function () {
+
+        Route::group(['middleware' => 'auth'], function () {
+            Route::post('/chekout', 'checkout')->name('checkout');
+            Route::get('/success', 'success')->name('success');
+            Route::get('/cancel', 'cancel')->name('cancel');
         });
 
     });

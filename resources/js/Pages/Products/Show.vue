@@ -1,7 +1,18 @@
 <script setup>
+import { useForm } from "@inertiajs/vue3"
+
   
   let props = defineProps(['product'])
   
+  let form = useForm({
+    _method: 'POST',
+    quantity: 1,
+    product_id: props.product.id,
+    amount: props.product.price
+  })
+  let buyProduct = () => {
+    form.post(route('payments.checkout') )
+  }
 </script>
 
 <template>
@@ -31,7 +42,14 @@
           <p class="text-xl ">{{ product.price }}</p>
           <p class="text-xl ">{{ product.details }}</p>
           
+          <div class="flex flex-row justify-self-end gap-5">
+            <input type="number" min="0" v-model="form.quantity">
+            
+            <button @click="buyProduct" class="primary-btn">Buy</button>
+          </div>
+
         </div>
       </div>
+
   </Layout>
 </template>
