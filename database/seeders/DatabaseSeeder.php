@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Category;
+use App\Models\Permission;
 use App\Models\Product;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -24,11 +25,13 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('a')
         ]);
 
-        Admin::create([
-            'name' => 'ad',
-            'email' => 'ad@a.a',
-            'password' => bcrypt('ad')
-        ]);
+        foreach (['ad1' , 'ad2'] as $admin) {
+            Admin::create([
+                'name' => $admin ,
+                'email' => $admin . '@a.a',
+                'password' => bcrypt($admin)
+            ]);
+        }
 
         $categories = ['category 1' , 'category 2' , 'category 3' , 'category 4' , 'category 5']; 
         
@@ -56,10 +59,14 @@ class DatabaseSeeder extends Seeder
 
         }
 
+        foreach ( ['create products' , 'create categories'] as $name) {
+            Permission::create([
+                'name' => $name,
+            ]);
+        }
 
-
-
-
-
+        foreach ( Admin::all() as $index => $admin )  {
+            $admin->permissions()->attach( $index + 1);
+        }
     }
 }

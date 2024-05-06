@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale() , 'middleware' =>  [ 
             Route::get('/search', 'search')->name('search');
             Route::post('/searchResult', 'searchResult')->name('search.result');
             Route::get('/{product}', 'show')->name('show');
+        });
+
+    });
+
+    Route::prefix('categories')->name('categories.')->controller(CategoryController::class)->group(function () {
+
+        Route::group(['middleware' => 'auth:admin'], function () {
+            Route::post('/', 'store')->name('store');
+            Route::get('/create', 'create')->name('create');
         });
 
     });

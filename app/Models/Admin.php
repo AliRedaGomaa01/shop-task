@@ -29,4 +29,15 @@ class Admin extends Authenticatable
         ];
     }
 
+    public function hasPermissionTo(string $name): bool
+    {
+        return $this->permissions()->where('name', $name)->exists();
+    }
+
+    # Relations
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'admin_permissions', 'admin_id', 'permission_id');
+    }
+
 }

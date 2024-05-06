@@ -20,7 +20,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+
+        $condition  = auth()->guard('admin')->user()->hasPermissionTo('create categories');
+        abort_unless( $condition , 403);
+
+        return inertia('Categories/Create');
     }
 
     /**
@@ -28,7 +32,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $condition  = auth()->guard('admin')->user()->hasPermissionTo('create categories');
+        abort_unless( $condition , 403);
+
+        $validated = $request->validate([
+            'title' => ['required' , 'string' , 'max:255'],
+            'details' => ['nullable' , 'string' , 'max:1023'],
+        ]);
+
+        $category = Category::create($validated);
+
+        return redirect()->route('products.index')->with('success', 'stored successfully.');
     }
 
     /**

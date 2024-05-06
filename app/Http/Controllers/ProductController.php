@@ -54,6 +54,8 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $condition  = auth()->guard('admin')->user()->hasPermissionTo('create products');
+        abort_unless( $condition , 403);
         $categories = $this->categoryService->getCategories();
         return inertia('Products/Create' , compact('categories'));
     }
@@ -63,6 +65,10 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        // authorization
+        $condition  = auth()->guard('admin')->user()->hasPermissionTo('create products');
+        abort_unless( $condition , 403);
+
         $validated = $request->validated();
 
         //  store image 
