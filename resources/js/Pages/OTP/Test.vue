@@ -14,6 +14,7 @@ import { router, useForm } from "@inertiajs/vue3"
 </script>
 
 <template>
+  <Head title="OTP Test"></Head>
     <Layout>
       <div v-if="!isSent" class="flex place-content-center" >
         <button class="primary-btn mx-auto" @click="router.get(route('otp.send'))">Send OTP</button>

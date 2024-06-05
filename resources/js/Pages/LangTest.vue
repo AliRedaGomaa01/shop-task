@@ -5,6 +5,7 @@
   let langLink = usePage().props.langLink;
   
 </script>
+<Head title="Lang Test"></Head>
 
 <template>
     
